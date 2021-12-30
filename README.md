@@ -11,7 +11,7 @@ Entry point приложения: index.js
 
 1. Сущности + структура и связи:
 
-1.1. Post
+1.1 Post
 - name (required)
 - body (required)
 - excerpt
@@ -21,18 +21,18 @@ Entry point приложения: index.js
 - createdAt
 - updatedAt
 
-1.2. Category
+1.2 Category
 - name (required)
 - excerpt
 - createdAt
 - updatedAt
 
-1.3. Tag
+1.3 Tag
 - name (required)
 - createdAt
 - updatedAt
 
-1.4. Author
+1.4 Author
 - name (required)
 - email (required)
 - createdAt
@@ -46,7 +46,7 @@ P.S. Поля createdAt и updatedAt должны содержать инфор�
 2. Необходимо реализовать CRUD для каждой из сущностей
 Давайте придерживаться след. нейминга: find, findOne, create, update, remove
 
-2. Требования по структуре:
+Требования по структуре:
 2.1. Для каждой из сущностей необходимо создать файл с роутами (routes/posts.js, routes/categories.js ...)
 2.2. Отдельный контроллер под сущность (controllers/posts.js, controllers/categories.js)
 2.3. Отдельная модель под сущность (models/post.js, models/category.js ...)
