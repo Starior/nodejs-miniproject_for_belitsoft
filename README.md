@@ -20,18 +20,18 @@ Entry point приложения: index.js
 - author (required + one to one relation)
 - createdAt
 - updatedAt
-- 
+
 1.2. Category
 - name (required)
 - excerpt
 - createdAt
 - updatedAt
-- 
+
 1.3. Tag
 - name (required)
 - createdAt
 - updatedAt
-- 
+
 1.4. Author
 - name (required)
 - email (required)
