@@ -1,13 +1,12 @@
 # nodejs-miniproject
 from belitsoft
 
-ДЗ:
 В рамках ДЗ давайте придерживаться след. структуры - у вас будет 2 папки client и server
 
 SERVER PART
 Необходимые пакеты: express, body-parser, mongoose, nodemon
 Entry point приложения: index.js
-+ Необходимо добавить script "start" c запуском index.js через nodemon
+Необходимо добавить script "start" c запуском index.js через nodemon
 
 1. Сущности + структура и связи:
 
