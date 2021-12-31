@@ -1,20 +1,14 @@
 const express = require('express')
-const PostModel = require('../models/post');
 
+const PostModel = require('../models/post');
+const postsController = require('../controllers/posts');
 const router = express.Router()
 
-// get all posts
-router.get('/posts', (req, res) => {
-  PostModel
-    .find()
-    .populate('categories')
-    .then((posts) => {
-      res.json(posts)
-    })
-    .catch((error) => {
-      res.status(400).json({ error: error.message })
-    })
-})
+// // get all posts
+router.get('/posts', postsController.find);
+
+// get single post by id
+router.get('/posts/:id', postsController.findOne);
 
 // create a new post
 router.post('/posts', (req, res) => {
