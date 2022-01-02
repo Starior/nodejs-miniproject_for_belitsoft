@@ -10,12 +10,18 @@ const schema = new Schema({
   categories: { // relation one to many 
     type: [mongoose.Types.ObjectId],
     ref: 'Category',
+    //required: true
   },
-  // relation one to one
-  // authorId: {
-  //     type: mongoose.Types.ObjectId,
-  //     ref: 'Author',
-  // }
+  tags: { // relation one to many 
+    type: [mongoose.Types.ObjectId],
+    ref: 'Tag',
+    //required: true
+  },
+  author: { // relation one to one 
+    type: mongoose.Types.ObjectId,
+    ref: 'Author',
+    required: true
+  }
 }, {
   timestamps: {
     createdAt: 'created_at',

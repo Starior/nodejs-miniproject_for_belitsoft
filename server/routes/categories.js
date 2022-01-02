@@ -1,32 +1,21 @@
 const express = require('express')
-const CategoryModel = require('../models/category');
 
+const categoryController = require('../controllers/categories');
 const router = express.Router()
 
-// get all 
-router.get('/categories', (req, res) => {
-  CategoryModel.find((error, posts) => {
-    if (error) {
-      return res.status(400).json({ error: error.message })
-    }
+// get all posts
+router.get('/categories', categoryController.find);
 
-    res.json(posts)
-  })
-})
+// get single post by id
+router.get('/categories/:id', categoryController.findOne);
 
-// create a new
-router.post('/categories', (req, res) => {
-  const post = new CategoryModel(req.body)
-  post
-    .save()
-    .then((post) => {
-      res.json(post);
-    })
-    .catch((error) => {
-      res.status(400).json({ error: error.message })
-    })
-})
+// create a new post
+router.post('/categories', categoryController.create);
 
-// todo: CRUD
+// update post by id
+router.patch('/categories/:id', categoryController.update);
+
+// delete post by id 
+router.delete('/categories/:id', categoryController.remove);
 
 module.exports = router
