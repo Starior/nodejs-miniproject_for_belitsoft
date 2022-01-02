@@ -1,21 +1,24 @@
 const express = require('express')
 
-const categoryController = require('../controllers/categories');
+const categoriesController = require('../controllers/categories');
 const router = express.Router()
 
+// Is id Exists? 
+router.use('/categories/:id', categoriesController.isExists);
+
 // get all posts
-router.get('/categories', categoryController.find);
+router.get('/categories', categoriesController.find);
 
 // get single post by id
-router.get('/categories/:id', categoryController.findOne);
+router.get('/categories/:id', categoriesController.findOne);
 
 // create a new post
-router.post('/categories', categoryController.create);
+router.post('/categories', categoriesController.create);
 
 // update post by id
-router.patch('/categories/:id', categoryController.update);
+router.patch('/categories/:id', categoriesController.update);
 
 // delete post by id 
-router.delete('/categories/:id', categoryController.remove);
+router.delete('/categories/:id', categoriesController.remove);
 
 module.exports = router

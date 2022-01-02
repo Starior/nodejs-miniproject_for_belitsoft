@@ -4,7 +4,7 @@ const find = (req, res) => {
   authorModel
     .find()
     .then((authors) => {
-      res.json(authors)
+      res.status(200).json(authors)
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -16,10 +16,7 @@ const findOne = (req, res) => {
   authorModel
     .findById(id)
     .then((author) => {
-      if (author != null)
-        res.status(200).json(author);
-      else
-        res.status(400).json("Author with this id does not exist");
+      res.status(200).json(author);
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -31,7 +28,7 @@ const create = (req, res) => {
   author
     .save()
     .then((author) => {
-      res.json(author);
+      res.status(200).json(author);
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -43,8 +40,8 @@ const update = (req, res) => {
   authorModel
     .updateOne({ _id: id }, req.body, function(err, result) {
       //mongoose.disconnect();
-      if (err) return console.log(err);
-      res.status(200).send(`Post with id ${id} was updated`);
+      if (err) res.status(400).send(`Author with id ${id} was NOT updated \n` + { error: error.message });
+      else res.status(200).send(`Author with id ${id} was updated`);
     })
 }
 
@@ -53,11 +50,18 @@ const remove = (req, res) => {
   authorModel
     .findByIdAndDelete(id, function(err, doc) {
       if (err) {
-        return console.log(err);
+        res.status(400).send(`Author with id ${id} was NOT deleted`);
       } else
         res.status(200).send(`Author with id ${id} was deleted`)
         // console.log(`Post with id ${id} was deleted`, doc);
     });
 }
 
-module.exports = { find, findOne, create, update, remove }
+const isExists = (req, res, next) => {
+  const { id } = req.params;
+  authorModel.exists({ _id: id }).then(result => {
+    if (!result) res.status(400).send("Author with this id does not exist")
+    else next()
+  });
+}
+module.exports = { find, findOne, create, update, remove, isExists }

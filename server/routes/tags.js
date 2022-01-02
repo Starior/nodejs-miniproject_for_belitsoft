@@ -3,6 +3,9 @@ const express = require('express')
 const tagsController = require('../controllers/tags');
 const router = express.Router()
 
+// Is id Exists? 
+router.use('/tags/:id', tagsController.isExists);
+
 // get all authors
 router.get('/tags', tagsController.find);
 

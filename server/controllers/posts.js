@@ -5,7 +5,7 @@ const find = (req, res) => {
     .find()
     .populate('categories tags author')
     .then((posts) => {
-      res.json(posts)
+      res.status(200).json(posts)
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -16,12 +16,9 @@ const findOne = (req, res) => {
   const { id } = req.params;
   postModel
     .findById(id)
-    .populate('categories')
+    .populate('categories tags author')
     .then((post) => {
-      if (post != null)
-        res.status(200).json(post);
-      else
-        res.status(400).json("Post with this id does not exist");
+      res.status(200).json(post);
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -33,7 +30,7 @@ const create = (req, res) => {
   post
     .save()
     .then((post) => {
-      res.json(post);
+      res.status(200).json(post);
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -45,8 +42,8 @@ const update = (req, res) => {
   postModel
     .updateOne({ _id: id }, req.body, function(err, result) {
       //mongoose.disconnect();
-      if (err) return console.log(err);
-      res.status(200).send(`Post with id ${id} was updated`);
+      if (err) res.status(400).send(`Post with id ${id} was NOT updated`);
+      else res.status(200).send(`Post with id ${id} was updated`);
     })
 }
 
@@ -54,9 +51,17 @@ const remove = (req, res) => {
   const { id } = req.params;
   postModel
     .findByIdAndDelete(id, function(err, doc) {
-      if (err) return console.log(err);
+      if (err) res.status(400).send(`Post with id ${id} was NOT deleted`);
       else res.status(200).send(`Post with id ${id} was deleted`)
     });
 }
 
-module.exports = { find, findOne, create, update, remove }
+const isExists = (req, res, next) => {
+  const { id } = req.params;
+  postModel.exists({ _id: id }).then(result => {
+    if (!result) res.status(400).send("Post with this id does not exist")
+    else next()
+  });
+}
+
+module.exports = { find, findOne, create, update, remove, isExists }

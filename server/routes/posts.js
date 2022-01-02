@@ -3,6 +3,9 @@ const express = require('express')
 const postsController = require('../controllers/posts');
 const router = express.Router()
 
+// Is id Exists? 
+router.use('/posts/:id', postsController.isExists);
+
 // get all posts
 router.get('/posts', postsController.find);
 

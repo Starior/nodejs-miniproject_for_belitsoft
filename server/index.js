@@ -25,19 +25,20 @@ app.use(authorsRoutes)
 app.use(tagsRoutes)
 
 app.get('/', (req, res) => {
-  res.send('Homepage')
+  res.status(200).send('Homepage')
 })
 
 app.get('/logs', (req, res) => {
   fs.readFile('./logs.json', function(error, data) {
     if (error) throw error;
-    res.send(data);
+    res.status(200).send(data); //JSON
+
   });
 })
 
 app.use(function(req, res, next) {
   if (!req.route)
-    res.send('That route not exist');
+    res.status(404).send('That route not exist');
   // next();
 });
 

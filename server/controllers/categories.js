@@ -15,12 +15,8 @@ const findOne = (req, res) => {
   const { id } = req.params;
   categoryModel
     .findById(id)
-    .populate('categories')
     .then((category) => {
-      if (category != null)
-        res.status(200).json(category);
-      else
-        res.status(400).json("Post with this id does not exist");
+      res.status(200).json(category);
     })
     .catch((error) => {
       res.status(400).json({ error: error.message })
@@ -52,7 +48,7 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const { id } = req.params;
   categoryModel
-    .findByIdAndDelete(id, function(err, doc) {
+    .findByIdAndDelete(id, (err, doc) => {
       if (err) {
         return console.log(err);
       } else
@@ -60,4 +56,11 @@ const remove = (req, res) => {
     });
 }
 
-module.exports = { find, findOne, create, update, remove }
+const isExists = (req, res, next) => {
+  const { id } = req.params;
+  categoryModel.exists({ _id: id }).then(result => {
+    if (!result) res.status(400).send("Category with this id does not exist")
+    else next()
+  });
+}
+module.exports = { find, findOne, create, update, remove, isExists }

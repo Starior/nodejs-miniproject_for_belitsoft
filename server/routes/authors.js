@@ -3,6 +3,9 @@ const express = require('express')
 const authorsController = require('../controllers/authors');
 const router = express.Router()
 
+// Is id Exists? 
+router.use('/authors/:id', authorsController.isExists);
+
 // get all authors
 router.get('/authors', authorsController.find);
 

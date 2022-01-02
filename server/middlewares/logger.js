@@ -6,9 +6,11 @@ const writeLog = (req, res, next) => {
     method: req.method,
     params: req.params,
     body: req.body,
-    time: Date.now()
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString('en-US', { hour12: false })
+      // time: Date.now()
   };
-  var json = JSON.stringify(obj);
+  var json = JSON.stringify(obj, null, 2);
   fs.appendFile('./logs.json', json + ",\n", () => {
     console.log('logs.json was updated');
   })
