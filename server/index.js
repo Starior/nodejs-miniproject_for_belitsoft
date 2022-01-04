@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 const fs = require('fs');
+const { connect } = require('./utils/database')
 
 const allRoutes = require('./routes/all')
 const postsRoutes = require('./routes/posts')
@@ -42,13 +42,10 @@ app.use(function(req, res, next) {
   // next();
 });
 
-const url = 'mongodb+srv://Starion:12345qwert@cluster0.pxpmi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-mongoose.connect(url, (error) => {
+connect((error) => {
   if (error) {
     console.log(error)
-    return
   }
-  console.log('It is connected')
   app.listen(3000, () => {
     console.log('It is running')
   })
