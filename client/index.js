@@ -1,26 +1,28 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
-const { connect, disconnect } = require('./utils/database')
+const { connect } = require('./utils/database')
 
-//const postsRoutes = require('./routes/posts');
-const indexRoute = require('./routes/index')
+const postsRoute = require('./routes/posts')
+const allRoutes = require('./routes/all')
+const categoriesRoutes = require('./routes/categories')
+const tagsRoutes = require('./routes/tags')
+
 const app = express();
-app.use(indexRoute)
+
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-// app.get('/', (req, res) => {
-//   // res.send('It is homepage')
-//   res.render('home', {
+app.use(allRoutes)
+app.use(postsRoute)
+app.use(categoriesRoutes)
+app.use(tagsRoutes)
 
-//     // pageTitle: 'Homepage',
-//     // message: 'Some message text',
-//     // posts
-//   });
-// });
-
-//app.use(postsRoutes);
+app.use(function(req, res, next) {
+  if (!req.route)
+    res.render('404', {});
+  // next();
+});
 
 connect((error) => {
   if (error) {

@@ -1,18 +1,17 @@
-const postModel = require('../models/post');
+const tagModel = require('../models/tag');
 
 const find = (req, res) => {
-  const isPosts = true
+  const tags = tagModel.find()
+  const isPosts = false
   const isCategories = false
-  const isTags = false
+  const isTags = true
   const isAuthors = false
-  const posts = postModel.find()
-  posts
+  tags
     .then((array) => {
       array.forEach(element => {
         element.created_at = element.created_at.toLocaleDateString() + " " + element.created_at.toLocaleTimeString('en-US', { hour12: false })
         element.updated_at = element.updated_at.toLocaleDateString() + " " + element.updated_at.toLocaleTimeString('en-US', { hour12: false })
       })
-
       res.render('home', {
         isPosts,
         isCategories,
@@ -23,30 +22,31 @@ const find = (req, res) => {
     })
 }
 
-const findOne = (req, res) => {
+const findAllPostsByTag = (req, res) => {
   const { id } = req.params;
-  const post = postModel.findOne(id)
+  const post = tagModel.findAllPostsByTag(id)
   post
-    .then((post) => {
-      res.render('postPage', {
-        post
+    .then((posts) => {
+      posts.forEach(element => {
+        element.created_at = element.created_at.toLocaleDateString() + " " + element.created_at.toLocaleTimeString('en-US', { hour12: false })
+        element.updated_at = element.updated_at.toLocaleDateString() + " " + element.updated_at.toLocaleTimeString('en-US', { hour12: false })
+      })
+      res.render('tags', {
+        posts
       });
-    }).catch((error) => {
-      res.status(400).json({ error: error.message })
     })
 }
 
 const isExists = (req, res, next) => {
   const { id } = req.params;
-  const post = postModel.isExists(id)
+  const post = tagModel.isExists(id)
 
-  post.then((post) => {
-    if (post) {
+  post.then((tag) => {
+    if (tag) {
       next()
     } else {
       res.render('404', {});
     }
   })
 }
-
-module.exports = { find, findOne, isExists }
+module.exports = { find, findAllPostsByTag, isExists }

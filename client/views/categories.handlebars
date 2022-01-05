@@ -1,44 +1,9 @@
+<h1>Posts by category</h1>
 <main>
-  <h1 style="text-align: center; font-size: 50px;">
-    {{#if isPosts}}
-    All Posts
-    <style>
-    .posts {
-      display: block;
-    }
-  </style>
-    {{/if}}
-
-    {{#if isCategories}}
-    All Categories
-    <style>
-    .categories {
-      display: block;
-    }
-  </style>
-    {{/if }}
-    {{#if isTags}}
-    All Tags
-    <style>
-    .tags {
-      display: block;
-    }
-  </style>
-    {{/if}}
-
-    {{#if isAuthors}}
-    All Authors
-    <style>
-    .authors {
-      display: block;
-    }
-  </style>
-    {{/if}}
-  </h1>
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {{#each array}}
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+ {{#each posts}}
 
         <div class="col">
           <div class="card shadow-sm">
@@ -81,25 +46,6 @@
               {{/if}}
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-
-                  
-                  <form class="hidden posts"  method="get" action="/posts/{{this._id}}">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary" value="">View (Work)</button>
-                  </form>
-
-                  <form class="hidden categories"  method="get" action="/category/{{this._id}}">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary" value="">View (Work)</button>
-                  </form>
-  
-                  <form class="hidden tags"  method="get" action="/tag/{{this._id}}">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary" value="">View (Work)</button>
-                  </form>
-
-                  <form class="hidden authors"  method="get" action="/author/{{this._id}}">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary" value="">View (Work)</button>
-                  </form>
-
-
                   <button type="button" class="btn btn-sm btn-outline-secondary">Edit(Not work)</button>
                 </div>
                 <small class="text-muted">created_at: {{this.created_at}}</small>
@@ -109,7 +55,8 @@
           </div>
         </div>
         {{/each}}
+        </div>
       </div>
     </div>
-  </div>
-</main>
+
+  </main>

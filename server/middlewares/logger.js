@@ -7,7 +7,7 @@ const writeLog = (req, res, next) => {
     params: req.params,
     body: req.body,
     date: new Date().toLocaleDateString(),
-    time: new Date().toLocaleTimeString({ hour12: false })
+    time: new Date().toLocaleTimeString('en-US', { hour12: false })
       // time: Date.now()
   };
   var json = JSON.stringify(obj, null, 2);

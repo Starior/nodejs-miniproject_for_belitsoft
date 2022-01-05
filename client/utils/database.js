@@ -16,14 +16,14 @@ const connect = (callback) => {
     })
 }
 
-const disconnect = (callback) => {
-  client.close().then(() => {
-    callback()
-  })
-}
+// const disconnect = (callback) => {
+//   client.close().then(() => {
+//     callback()
+//   })
+// }
 
 const getDb = () => database
 
 exports.connect = connect
-exports.disconnect = disconnect
+  // exports.disconnect = disconnect
 exports.getDb = getDb
