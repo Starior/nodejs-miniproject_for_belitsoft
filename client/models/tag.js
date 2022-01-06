@@ -22,6 +22,8 @@ module.exports = class TagModel {
     return posts
       .collection('posts')
       .aggregate([{
+          $match: { tags: ObjectId(id) }
+        }, {
           $lookup: {
             from: 'categories',
             localField: 'categories',
@@ -42,13 +44,14 @@ module.exports = class TagModel {
             foreignField: '_id',
             as: 'author'
           }
-        },
-        {
-          $unwind: "$tags"
-        },
-        {
-          $match: { "tags._id": ObjectId(id) }
         }
+        // ,
+        // {
+        //   $unwind: "$tags"
+        // },
+        // {
+        //   $match: { "tags._id": ObjectId(id) }
+        // }
       ])
       .toArray()
       .then((posts) => {

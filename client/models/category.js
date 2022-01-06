@@ -20,7 +20,13 @@ module.exports = class CategoryModel {
     const posts = getDb();
     return posts
       .collection('posts')
+      // .find({
+      //   categories: ObjectId(id)
+      // })
       .aggregate([{
+          $match: { categories: ObjectId(id) }
+        },
+        {
           $lookup: {
             from: 'categories',
             localField: 'categories',
@@ -42,15 +48,35 @@ module.exports = class CategoryModel {
             as: 'author'
           }
         },
-        {
-          $unwind: "$categories"
-        },
-        {
-          $match: { "categories._id": ObjectId(id) }
-        }
+
+        // {
+        //   $in: [ObjectId(id), "categories"]
+        // }
+
+        // {
+        //   $unwind: "$categories"
+        // },
+        // {
+        //   $match: { categories: id }
+        // }
+
+        // {
+        //   $filter: {
+        //     input: "$categories",
+        //     as: "category",
+        //     cond: { $in: [ObjectId(id), "$categories"] }
+        //   }
+        // }
       ])
-      .toArray()
+      // .find({
+      //   categories: ObjectId(id)
+      // })
+
+
+
+    .toArray()
       .then((posts) => {
+        console.log(posts)
         return posts
       })
   }

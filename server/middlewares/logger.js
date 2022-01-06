@@ -19,7 +19,6 @@ const writeLog = (req, res, next) => {
     const rawdata = fs.readFileSync('./logs.json');
     if (validateJSON(rawdata)) {
       // console.log('file json');
-
       const myJSON = JSON.parse(rawdata);
       let myJSONString = JSON.stringify(myJSON, null, 2);
       if (myJSONString.slice(myJSONString.length - 1) === "]") {
@@ -67,4 +66,5 @@ function validateJSON(body) {
     return false;
   }
 }
+
 module.exports = { writeLog }
