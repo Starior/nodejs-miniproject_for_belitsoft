@@ -16,12 +16,12 @@ const writeLog = (req, res, next) => {
 
   if (checkFileExistsSync('./logs.json')) {
     // console.log('file exists');
-    let rawdata = fs.readFileSync('./logs.json');
+    const rawdata = fs.readFileSync('./logs.json');
     if (validateJSON(rawdata)) {
       // console.log('file json');
-      let rawdata = fs.readFileSync('./logs.json');
+
       const myJSON = JSON.parse(rawdata);
-      myJSONString = JSON.stringify(myJSON, null, 2);
+      let myJSONString = JSON.stringify(myJSON, null, 2);
       if (myJSONString.slice(myJSONString.length - 1) === "]") {
         // 3 & subsequent logs
         myJSONString = myJSONString.slice(1, myJSONString.length - 1)
